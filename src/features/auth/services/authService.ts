@@ -1,6 +1,6 @@
 import type { LoginRequest, LoginResponse } from '../types';
 
-const API_URL = 'http://localhost:3000';
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const authService = {
     async login(payload: LoginRequest): Promise<LoginResponse> {
