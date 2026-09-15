@@ -33,6 +33,7 @@ body {
   height: 8px;
   width: 8px;
 }
+
 .scrollbar-thin::-webkit-scrollbar-thumb {
   @apply bg-slate-300 rounded-full;
 }

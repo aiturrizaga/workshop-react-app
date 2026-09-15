@@ -1,22 +1,12 @@
+import { apiClient } from '@/shared/api/apiClient';
 import type { LoginRequest, LoginResponse } from '../types';
 
-const API_URL = import.meta.env.VITE_API_URL;
-
+/**
+ * Ya no llamamos a `fetch` directamente: apiClient centraliza la URL base,
+ * los headers y el manejo de errores para todas las features.
+ */
 export const authService = {
-    async login(payload: LoginRequest): Promise<LoginResponse> {
-        const response = await fetch(`${API_URL}/api/auth/login`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(payload)
-        });
-
-        const body = await response.json().catch(() => null);
-
-        if (!response.ok) {
-            const message = body?.message ?? 'No pudimos iniciar sesión';
-            throw new Error(Array.isArray(message) ? message.join(', ') : message);
-        }
-
-        return body as LoginResponse;
-    }
-}
+  login(payload: LoginRequest) {
+    return apiClient.post<LoginResponse>('/auth/login', payload);
+  },
+};
