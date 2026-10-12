@@ -1,3 +1,5 @@
+import type { UserRole } from '@/shared/constants/roles';
+
 /**
  * En esta sesión el tipo de usuario se define aquí mismo, de forma
  * autocontenida: todavía no existe el feature de Users del que depender.
@@ -7,7 +9,7 @@ export interface AuthUser {
   firstName: string;
   lastName: string;
   email: string;
-  role: string;
+  role: UserRole;
 }
 
 export interface LoginRequest {

@@ -1,23 +1,21 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ShoppingCart } from 'lucide-react';
-import { Alert } from '@/shared/ui/Alert';
-import { Card, CardBody } from '@/shared/ui/Card';
+import { Alert } from '@/components/ui/Alert';
+import { Card, CardBody } from '@/components/ui/Card';
 import { ApiError } from '@/shared/api/apiError';
-import { AUTH_TOKEN_STORAGE_KEY } from '@/shared/constants/storage';
-import { authService } from '../services/authService';
+import { useAuth } from '../hooks/useAuth';
 import { LoginForm } from '../components/LoginForm';
 
-
 export function LoginPage() {
+  const { login } = useAuth();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   async function handleSubmit(email: string, password: string) {
     setErrorMessage(null);
     try {
-      const { accessToken } = await authService.login({ email, password });
-      localStorage.setItem(AUTH_TOKEN_STORAGE_KEY, accessToken);
+      await login(email, password);
       navigate('/home', { replace: true });
     } catch (error) {
       setErrorMessage(
@@ -45,9 +43,7 @@ export function LoginPage() {
         </Card>
 
         <p className="mt-6 text-center text-xs text-slate-400">
-          <b>Administrador:</b> admin@example.com / Admin123*
-          <br />
-          <b>Cajero:</b> seller@example.com / Seller123*
+          admin@example.com / Admin123* &middot; seller@example.com / Seller123*
         </p>
       </div>
     </div>
