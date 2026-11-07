@@ -1,4 +1,4 @@
-import { House, Package, Users } from 'lucide-react';
+import { House, Package, ShoppingCart, Users } from 'lucide-react';
 import type { UserRole } from '@/shared/constants/roles';
 
 export interface NavItem {
@@ -11,11 +11,11 @@ export interface NavItem {
 
 /**
  * Fuente única de la navegación del sidebar (y del menú mobile).
- * Ventas y Usuarios se agregan en las sesiones 5 y 6, cuando esas
- * features existen.
+ * Usuarios (y el Dashboard real) se agregan en la sesión 6.
  */
 export const NAV_ITEMS: NavItem[] = [
   { label: 'Inicio', to: '/home', icon: House },
   { label: 'Productos', to: '/products', icon: Package },
   { label: 'Clientes', to: '/customers', icon: Users },
+  { label: 'Ventas', to: '/sales', icon: ShoppingCart },
 ];

@@ -7,6 +7,8 @@ import { ProtectedRoute } from './features/auth/components/ProtectedRoute';
 import { DashboardLayout } from './shared/layout/DashboardLayout';
 import { NotFoundPage } from './shared/pages/NotFoundPage';
 import { CustomersPage } from './features/customers/pages/CustomersPage';
+import { SalesPage } from './features/sales/pages/SalesPage';
+import { NewSalePage } from './features/sales/pages/NewSalePage';
 
 export function AppRouter() {
     return (
@@ -21,6 +23,8 @@ export function AppRouter() {
                     <Route path='/home' element={<HomePage />} />
                     <Route path='/products' element={<ProductsPage />} />
                     <Route path="/customers" element={<CustomersPage />} />
+                    <Route path="/sales" element={<SalesPage />} />
+                    <Route path="/sales/new" element={<NewSalePage />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Route>
             </Route>
