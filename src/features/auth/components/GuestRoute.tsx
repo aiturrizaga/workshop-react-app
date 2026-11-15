@@ -4,7 +4,7 @@ import { useAuth } from '../hooks/useAuth';
 
 /**
  * Envuelve rutas públicas como /login: si el usuario YA está autenticado,
- * lo redirige a /home en vez de mostrarle el formulario de login otra vez.
+ * lo redirige al dashboard en vez de mostrarle el formulario de login otra vez.
  */
 export function GuestRoute() {
   const { isAuthenticated, status } = useAuth();
@@ -14,7 +14,7 @@ export function GuestRoute() {
   }
 
   if (isAuthenticated) {
-    return <Navigate to="/home" replace />;
+    return <Navigate to="/dashboard" replace />;
   }
 
   return <Outlet />;

@@ -21,7 +21,6 @@ import type { Product } from '../types';
 
 const PAGE_SIZE = 10;
 
-
 export function ProductsPage() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');

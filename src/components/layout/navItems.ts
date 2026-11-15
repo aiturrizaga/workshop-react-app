@@ -1,21 +1,20 @@
-import { House, Package, ShoppingCart, Users } from 'lucide-react';
+import { FileText, LayoutDashboard, Package, ShoppingCart, Users, UserCog } from 'lucide-react';
 import type { UserRole } from '@/shared/constants/roles';
 
 export interface NavItem {
   label: string;
   to: string;
-  icon: typeof House;
+  icon: typeof LayoutDashboard;
   /** Si se omite, el ítem es visible para cualquier rol autenticado. */
   allowedRoles?: UserRole[];
 }
 
-/**
- * Fuente única de la navegación del sidebar (y del menú mobile).
- * Usuarios (y el Dashboard real) se agregan en la sesión 6.
- */
+/** Fuente única de la navegación del sidebar (y del menú mobile). */
 export const NAV_ITEMS: NavItem[] = [
-  { label: 'Inicio', to: '/home', icon: House },
+  { label: 'Dashboard', to: '/dashboard', icon: LayoutDashboard },
   { label: 'Productos', to: '/products', icon: Package },
   { label: 'Clientes', to: '/customers', icon: Users },
   { label: 'Ventas', to: '/sales', icon: ShoppingCart },
+  { label: 'Reportes', to: '/reports', icon: FileText },
+  { label: 'Usuarios', to: '/users', icon: UserCog, allowedRoles: ['ADMIN'] },
 ];

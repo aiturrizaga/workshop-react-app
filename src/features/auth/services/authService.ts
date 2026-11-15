@@ -1,5 +1,6 @@
 import { apiClient } from '@/shared/api/apiClient';
-import type { AuthUser, LoginRequest, LoginResponse } from '../types';
+import type { User } from '@/features/users/types';
+import type { LoginRequest, LoginResponse } from '../types';
 import type { ApiResponse } from '@/shared/types/api';
 
 /**
@@ -11,6 +12,6 @@ export const authService = {
     return apiClient.post<LoginResponse>('/auth/login', payload);
   },
   me() {
-    return apiClient.get<ApiResponse<AuthUser>>('/auth/me');
+    return apiClient.get<ApiResponse<User>>('/auth/me');
   },
 };

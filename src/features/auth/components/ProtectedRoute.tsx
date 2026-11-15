@@ -11,7 +11,7 @@ interface ProtectedRouteProps {
 /**
  * Envuelve rutas privadas (ver app/router.tsx). Si el usuario no está
  * autenticado lo manda a /login. Si su rol no está permitido, lo manda
- * de vuelta a /home (el backend seguirá rechazando la petición igual;
+ * de vuelta a /dashboard (el backend seguirá rechazando la petición igual;
  * esto solo mejora la experiencia de usuario, ver RolesGuard en el backend).
  */
 export function ProtectedRoute({ allowedRoles }: ProtectedRouteProps) {
@@ -26,7 +26,7 @@ export function ProtectedRoute({ allowedRoles }: ProtectedRouteProps) {
   }
 
   if (allowedRoles && !allowedRoles.includes(user.role)) {
-    return <Navigate to="/home" replace />;
+    return <Navigate to="/dashboard" replace />;
   }
 
   return <Outlet />;

@@ -8,7 +8,6 @@ import { Select } from '@/shared/ui/Select';
 import { ApiError } from '@/shared/api/apiError';
 import type { CreateProductRequest, Product } from '../types';
 
-
 export type ProductFormValues = CreateProductRequest & { active?: boolean };
 
 interface ProductFormProps {

@@ -16,7 +16,7 @@ export function LoginPage() {
     setErrorMessage(null);
     try {
       await login(email, password);
-      navigate('/home', { replace: true });
+      navigate('/dashboard', { replace: true });
     } catch (error) {
       setErrorMessage(
         error instanceof ApiError ? error.message : 'No pudimos iniciar sesión. Intenta de nuevo.',

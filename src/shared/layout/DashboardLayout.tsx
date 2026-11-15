@@ -13,15 +13,18 @@ export function DashboardLayout() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-slate-200 bg-white md:block">
+      <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-slate-200 bg-white md:block print:hidden">
         <Sidebar />
       </aside>
 
       <MobileMenu open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
 
-      <div className="md:pl-64">
-        <Header onOpenMenu={() => setMobileMenuOpen(true)} />
-        <main className="p-4 sm:p-6">
+      {/* print:hidden oculta sidebar y header al usar window.print() */}
+      <div className="md:pl-64 print:pl-0">
+        <div className="print:hidden">
+          <Header onOpenMenu={() => setMobileMenuOpen(true)} />
+        </div>
+        <main className="p-4 sm:p-6 print:p-0">
           <Outlet />
         </main>
       </div>

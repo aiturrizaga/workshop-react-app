@@ -6,7 +6,6 @@ import { authService } from '../services/authService';
 import type { AuthUser } from '../types';
 import { AuthContext, type AuthContextValue, type AuthStatus } from './AuthContext';
 
-
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [status, setStatus] = useState<AuthStatus>('checking');

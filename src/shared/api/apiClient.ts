@@ -84,6 +84,54 @@ async function request<T>(method: string, path: string, options: RequestOptions 
   return parsedBody as T;
 }
 
+/** Archivo binario descargado del backend (reportes PDF, Excel, CSV). */
+export interface DownloadedFile {
+  blob: Blob;
+  filename: string;
+}
+
+/** Lee el nombre de archivo propuesto por el backend en Content-Disposition. */
+function filenameFromDisposition(disposition: string | null, fallback: string): string {
+  if (!disposition) return fallback;
+  const utf8 = /filename\*=UTF-8''([^;]+)/i.exec(disposition);
+  if (utf8) return decodeURIComponent(utf8[1]);
+  const plain = /filename="?([^";]+)"?/i.exec(disposition);
+  return plain?.[1] ?? fallback;
+}
+
+/**
+ * Pide un ARCHIVO al backend. `request` hace JSON.parse, que no sirve para
+ * binarios: aquí se lee la respuesta con `response.blob()`.
+ * Si el backend responde con error, el cuerpo sí es JSON ({ statusCode, message }).
+ */
+async function download(path: string, query?: object): Promise<DownloadedFile> {
+  const token = localStorage.getItem(AUTH_TOKEN_STORAGE_KEY);
+
+  const response = await fetch(
+    `${API_URL}${path}${buildQueryString(query as Record<string, QueryValue> | undefined)}`,
+    { headers: token ? { Authorization: `Bearer ${token}` } : {} },
+  );
+
+  if (!response.ok) {
+    if (response.status === 401) {
+      window.dispatchEvent(new CustomEvent(UNAUTHORIZED_EVENT));
+    }
+    const rawBody = await response.text();
+    let body: ApiErrorBody;
+    try {
+      body = JSON.parse(rawBody) as ApiErrorBody;
+    } catch {
+      body = { statusCode: response.status, message: response.statusText, error: 'Error' };
+    }
+    throw new ApiError(body);
+  }
+
+  return {
+    blob: await response.blob(),
+    filename: filenameFromDisposition(response.headers.get('Content-Disposition'), 'reporte'),
+  };
+}
+
 export const apiClient = {
   // `query` acepta cualquier objeto de query params tipado por el caller
   // (ProductQuery, CustomerQuery, ...). TypeScript no permite asignar un
@@ -98,4 +146,7 @@ export const apiClient = {
   patch: <T>(path: string, body?: unknown) => request<T>('PATCH', path, { body }),
 
   delete: <T>(path: string) => request<T>('DELETE', path),
+
+  /** Descarga un archivo (Blob + nombre sugerido por el backend). */
+  download,
 };

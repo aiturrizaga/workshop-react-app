@@ -1,16 +1,11 @@
-import type { UserRole } from '@/shared/constants/roles';
+import type { User } from '@/features/users/types';
 
 /**
- * En esta sesión el tipo de usuario se define aquí mismo, de forma
- * autocontenida: todavía no existe el feature de Users del que depender.
+ * El "user" que devuelve POST /auth/login es un subconjunto de User
+ * (no incluye active/createdAt/updatedAt). GET /auth/me sí devuelve el
+ * User completo, que también es compatible con este tipo.
  */
-export interface AuthUser {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  role: UserRole;
-}
+export type AuthUser = Pick<User, 'id' | 'firstName' | 'lastName' | 'email' | 'role'>;
 
 export interface LoginRequest {
   email: string;
